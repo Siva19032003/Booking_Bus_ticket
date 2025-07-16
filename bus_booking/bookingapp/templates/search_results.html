@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .search-results-container {
+    max-width: 80%;
+    margin-left: 140px;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-results-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    padding: 10px;
+}
+
+.bus-item {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.bus-item:hover {
+    transform: scale(1.009);
+    border-color: #007bff;
+}
+
+.bus-info {
+    font-size: 16px;
+    color: #333;
+}
+
+.bus-book-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.bus-book-btn:hover {
+    background-color: #0056b3;
+}
+
+</style>
+
+<div class="search-results-container">
+  <h2>Search Results</h2>
+  {% if buses %}
+    {% for bus in buses %}
+      <div class="bus-item">
+        <div class="bus-info">
+          {{ bus.bus_name }} | {{ bus.source }} to {{ bus.destination }} | ₹{{ bus.price }}
+        </div>
+        <a class="bus-book-btn" href="/book/{{ bus.id }}/">Book Now</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No buses found.</p>
+  {% endif %}
+</div>
+{% endblock %}

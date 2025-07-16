@@ -1,0 +1,81 @@
+/* Background and center container */
+body {
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/3439481.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Form container */
+.form-box {
+    background: rgba(75, 75, 75, 0.127);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    width: 350px;
+    padding: 40px;
+    color: #918f8fe2;
+    text-align: center;
+}
+
+/* Heading */
+.form-box h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Inputs */
+.form-box input[type="text"],
+.form-box input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(160, 158, 158, 0.523);
+    color: rgba(39, 35, 35, 0.716);
+    font-size: 16px;
+    outline: none;
+}
+
+.form-box input::placeholder {
+    color: #635f5f8a;
+}
+
+/* Submit button */
+.form-box input[type="submit"] {
+    width: 60%;
+    margin-top: 40px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #11cde295;
+    color: #4e54c8;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.form-box input[type="submit"]:hover {
+    background-color: #7de9f1d4;
+}
+
+/* Links */
+.form-box a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #858181c9;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.form-box a:hover {
+    text-decoration: underline;
+}

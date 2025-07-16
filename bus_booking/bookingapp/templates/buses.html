@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="bus-list">
+    <h2 class="page-title">Available Buses</h2>
+    {% for bus in buses %}
+    <div class="bus-card">
+        <h3>{{ bus.bus_name }}</h3>
+        <p><strong>From:</strong> {{ bus.source }} &nbsp;&nbsp;&nbsp;
+           <strong>To:</strong> {{ bus.destination }}</p>
+        <p><strong>Date:</strong> {{ bus.date }}</p>
+        <p><strong>Price:</strong> ₹{{ bus.price }} &nbsp;&nbsp;&nbsp;
+           <strong>Seats Available:</strong> {{ bus.available_seats }}</p>
+        <a href="/book/{{ bus.id }}/" class="book-btn">Book Now</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

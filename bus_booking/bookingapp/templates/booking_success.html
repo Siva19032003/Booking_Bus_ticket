@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #2b2e4a);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #00ffab;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+
+  .btn {
+    background-color: #00bcd4;
+    color: white;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 188, 212, 0.4);
+  }
+
+  .btn:hover {
+    background-color: #0097a7;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      padding: 25px;
+      margin: 20px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+    }
+
+    .btn {
+      font-size: 14px;
+      padding: 10px 22px;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="card">
+    <h3>🎉 Congratulations! Your Ticket Are Confirmed You can Download Your Ticket Click The Below Button </strong>.</h3>
+    <a href="{% url 'view_bookings' %}" class="btn">📄 Go to My Bookings</a>
+  </div>
+</div>
+{% endblock %}

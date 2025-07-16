@@ -1,0 +1,8 @@
+{% for booking in bookings %}
+  {% if booking.user == request.user %}
+    <form method="post" action="{% url 'cancel_booking' booking.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Cancel</button>
+    </form>
+  {% endif %}
+{% endfor %}

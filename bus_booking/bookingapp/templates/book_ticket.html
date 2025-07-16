@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Global page style */
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #2b2e4a);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Centered container with glass effect */
+  .container {
+    max-width: 50%;
+    margin: 50px 440px;
+    background: rgba(190, 184, 184, 0.338);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    color: #fff;
+  }
+
+  /* Heading styling */
+  h2 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #ffffff;
+  }
+
+  /* Form structure */
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+    color: #f0f0f0;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  .form-control:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+  }
+
+  .form-control::placeholder {
+    color: #ccc;
+  }
+
+  /* Submit button */
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  /* Error alert */
+  .alert-danger {
+    background-color: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  /* Dynamic traveler fields */
+  #traveler-details hr {
+    border: 1px dashed #ccc;
+    margin: 25px 0;
+  }
+
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .container {
+      margin: 20px;
+      padding: 25px;
+    }
+  }
+
+
+
+</style>
+<div class="container mt-4">
+  <h2 class="mb-4">Booking: {{ bus.bus_name }}</h2>
+  {% if error %}
+  <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="date">Travel Date:</label>
+      <input type="date" class="form-control" name="date" value="{{ bus.date|date:'Y-m-d' }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="pickup">Pick-up Point:</label>
+      <input type="text" class="form-control" name="pickup" required>
+    </div>
+
+    <div class="form-group">
+      <label for="drop">Drop-off Point:</label>
+      <input type="text" class="form-control" name="drop" required>
+    </div>
+
+    <div class="form-group">
+      <label for="bus_type">Bus Type:</label>
+      <select name="bus_type" class="form-control" required>
+        <option value="">Select Type</option>
+        <option value="Seater">Seater</option>
+        <option value="Sleeper">Sleeper</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="seats">Number of Seats:</label>
+      <input type="number" class="form-control" id="seats" name="seats" min="1" required oninput="generateTravelerFields()">
+    </div>
+
+    <div id="traveler-details" class="mb-3"></div>
+
+    <button type="submit" class="btn btn-primary">Book Now</button>
+  </form>
+</div>
+
+<script>
+function generateTravelerFields() {
+  let count = document.getElementById("seats").value;
+  let container = document.getElementById("traveler-details");
+  container.innerHTML = "";
+
+  for (let i = 1; i <= count; i++) {
+    container.innerHTML += `
+      <div class="form-group">
+        <label>Traveler ${i} Name:</label>
+        <input type="text" class="form-control" name="traveler_name_${i}" required>
+      </div>
+      <div class="form-group">
+        <label>Seat Number for Traveler ${i}:</label>
+        <input type="text" class="form-control" name="seat_number_${i}" required>
+      </div>
+      <hr>
+    `;
+  }
+}
+</script>
+{% endblock %}

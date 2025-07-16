@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="view_tickets">
+<style>
+    /* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #ffffff);
+    margin: 0;
+    padding: 0;
+}
+
+/* Title Styling */
+h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #00796b;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* Booking List Container */
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Each Booking Item */
+li {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 6px solid #009688;
+}
+
+li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Label Styling */
+li strong {
+    color: #37474f;
+    display: inline-block;
+    width: 140px;
+}
+
+/* No Bookings Message */
+p {
+    text-align: center;
+    color: #616161;
+    font-size: 18px;
+    margin-top: 50px;
+}
+
+.home-btn {
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.home-btn:hover {
+    background-color: #388e3c;
+}
+
+
+.cancel-btn {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.cancel-btn:hover {
+    background-color: #c62828;
+}
+
+.pdf-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+.pdf-btn:hover {
+    background-color: #1976d2;
+}
+
+.cancel-form {
+    margin-top: 10px;
+}
+
+.cancel-form button {
+    background-color: #dc3545; /* Bootstrap danger red */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-form button:hover {
+    background-color: #c82333;
+}
+
+.cancel-form button:active {
+    background-color: #bd2130;
+    transform: scale(0.98);
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    li {
+        padding: 20px;
+        font-size: 15px;
+    }
+
+    li strong {
+        width: 120px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<h2>My Bookings</h2>
+
+{% if bookings %}
+    <ul>
+        {% for booking in bookings %}
+            <li style="margin-bottom: 15px;">
+                <strong>Passenger:</strong> {{ booking.passenger_name }}<br>
+                <strong>Bus:</strong> {{ booking.bus }}<br>
+                <strong>Route:</strong> {{ booking.bus.source }} → {{ booking.bus.destination }}<br>
+                <strong>Seat Number:</strong> {{ booking.seat_number }}<br>
+                <strong>Bus Type:</strong> {{ booking.bus_type }}<br>
+                <strong><i class="fas fa-map-marker-alt"></i> Pickup:</strong> {{ booking.pickup }}<br>
+                <strong><i class="fas fa-map-pin"></i> Drop:</strong> {{ booking.drop }}<br>
+                <strong>Journey Date:</strong> {{ booking.date }}<br>
+                <strong>Booking Date:</strong> {{ booking.booking_date|date:"Y-m-d H:i" }}<br>
+                <form action="{% url 'cancel_booking' booking.id %}" method="post" class="cancel-form" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                </form>
+
+                <a href="{% url 'download_ticket' booking.id %}" class="pdf-btn">Download Ticket (PDF)</a>
+                <a href="{% url 'home' %}" class="home-btn">← Back to Home</a>
+            
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no bookings.</p>
+{% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bus-filter-container">
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <h2>Filter Buses</h2>
+        <form method="GET" action=".">
+            <label for="departure">Departure:</label>
+            <input type="text" id="departure" name="departure" placeholder="Enter city">
+
+            <label for="arrival">Arrival:</label>
+            <input type="text" id="arrival" name="arrival" placeholder="Enter city">
+
+            <label for="date">Travel Date:</label>
+            <input type="date" id="date" name="date">
+
+            <label for="bus-type">Bus Type:</label>
+            <select id="bus-type" name="bus_type">
+            <option value="">All</option>
+            <option value="AC">AC</option>
+            <option value="Non-AC">Non-AC</option>
+            <option value="Sleeper">Sleeper</option>
+            <option value="Seater">Seater</option>
+            </select>
+
+            <label for="max_price">Max Price (₹):</label>
+            <input type="number" id="max_price" name="max_price" placeholder="e.g. 500">
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+
+    <!-- Bus List Section -->
+    <div class="bus-list-section">
+
+        {% if buses %}
+            <h2 class="page-title">Available Buses</h2>
+            {% for bus in buses %}
+            <div class="bus-card">
+                <h3>{{ bus.bus_name }}</h3>
+                <p><strong>From:</strong> {{ bus.source }} &nbsp;&nbsp;&nbsp;
+                <strong>To:</strong> {{ bus.destination }}</p>
+                <p><strong>Date:</strong> {{ bus.date }}</p>
+                <p><strong>Price:</strong> ₹{{ bus.price }} &nbsp;&nbsp;&nbsp;
+                <strong>Seats Available:</strong> {{ bus.available_seats }}</p>
+                <a href="/book/{{ bus.id }}/" class="book-btn">Book Now</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>No buses available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
